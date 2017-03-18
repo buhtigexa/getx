@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script makess the cluster and runs the test 
+
 
 #git clone https://github.com/buhtigexa/getx
 

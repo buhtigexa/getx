@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#stops the cluster and all the containers in the system, also remove images
+
 docker-machine stop manager
 docker-machine stop worker1
 docker-machine stop worker2

@@ -1,5 +1,7 @@
 # on the host's bash
 
+# Creates the cluster and provision it with the images and load balancer
+
 sh delete_swarm.sh
 
 docker-machine create -d virtualbox manager & docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2 & docker-machine create -d virtualbox worker3
