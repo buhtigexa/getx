@@ -4,7 +4,7 @@
 
 sh delete_swarm.sh
 
-docker-machine create -d virtualbox manager & docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2 & docker-machine create -d virtualbox worker3
+docker-machine create -d virtualbox manager & docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2 
 
 docker-machine ssh manager "docker swarm init \
     --listen-addr $(docker-machine ip manager) \
@@ -25,11 +25,6 @@ docker-machine ssh worker2 "docker swarm join \
     --advertise-addr $(docker-machine ip worker2) \
     $(docker-machine ip manager)"
 
-docker-machine ssh worker3 "docker swarm join \
-    --token=${worker_token} \
-    --listen-addr $(docker-machine ip worker3) \
-    --advertise-addr $(docker-machine ip worker3) \
-    $(docker-machine ip manager)"
 
 
 docker-machine ssh manager "docker network create --driver=overlay traefik-net"
@@ -47,15 +42,6 @@ docker-machine ssh manager "docker service create \
     --docker.watch \
     --web"
 
-docker-machine ssh manager "docker service create \
---name ocrws \
---mount type=bind,source=/tmp,target=/tmp/ \
---network traefik-net \
---label traefik.port=8080 \
---publish 33000:8080 \
---label traefik.backend=ocrws \
---label traefik.frontend.rule=Host:cloud.ocr.docker.localhost \
- dockerexa/ocrws:v1"
 
 
 docker-machine ssh manager "docker service create \
@@ -67,17 +53,30 @@ docker-machine ssh manager "docker service create \
 --label traefik.frontend.rule=Host:cloud.nlp.docker.localhost \
 dockerexa/nlpws:v1"
 
+sleep 1h
+
+docker-machine ssh manager "docker service create \
+--name ocrws \
+--mount type=bind,source=/tmp,target=/tmp/ \
+--network traefik-net \
+--label traefik.port=8080 \
+--publish 33000:8080 \
+--label traefik.backend=ocrws \
+--label traefik.frontend.rule=Host:cloud.ocr.docker.localhost \
+ dockerexa/ocrws:v1"
+
+
+#sed -i "3i 192.168.99.100" www.getx.com
 
 clear
 
 docker-machine ssh manager "docker service scale ocrws=2"
-docker-machine ssh manager "docker service scale nlpws=2"
+#docker-machine ssh manager "docker service scale nlpws=2"
 docker-machine ls
 docker-machine ssh manager "docker service ls"
 docker-machine ssh manager "docker node ps"
 docker-machine ssh manager "docker node ps worker1"
 docker-machine ssh manager "docker node ps worker2"
-docker-machine ssh manager "docker node ps worker3"
 
 
 
