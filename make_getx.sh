@@ -2,7 +2,6 @@
 
 # Creates the cluster and provision it with the images and load balancer
 
-git clone https://github.com/buhtigexa/getx.git
 
 cd getx
 
