@@ -2,6 +2,22 @@
 
 # Creates the cluster and provision it with the images and load balancer
 
+git clone https://github.com/buhtigexa/getx.git
+
+cd getx
+
+git clone https://github.com/buhtigexa/nlpws.git
+git clone https://github.com/buhtigexa/ocrws.git
+cd nlpws
+sh build.sh
+
+cd ..
+cd ocrws
+sh build.sh
+
+cd ..
+
+
 sh delete_swarm.sh
 
 docker-machine create -d virtualbox manager & docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2 
