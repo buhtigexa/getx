@@ -9,8 +9,6 @@ echo "  "
 ocrws=http://www.getx.com:33000/ocrws/tpfcloud/ocr/upload
 nlpws=http://www.getx.com:33100/nlpws/tpfcloud/nlp/
 
-#ocrws=http://0.0.0.0:32776/ocrws/tpfcloud/ocr/upload
-#nlpws=http://0.0.0.0:32777/nlpws/tpfcloud/nlp/
 
 allFiles=$(ls -1 ./images/ | wc -l)
 
