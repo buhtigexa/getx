@@ -3,7 +3,7 @@
 # Creates the cluster and provision it with the images and load balancer
 
 
-cd getx
+
 
 git clone https://github.com/buhtigexa/nlpws.git
 git clone https://github.com/buhtigexa/ocrws.git
@@ -19,7 +19,9 @@ cd ..
 
 sh delete_swarm.sh
 
-docker-machine create -d virtualbox manager & docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2 
+docker-machine create -d virtualbox manager 
+docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2
+
 
 docker-machine ssh manager "docker swarm init \
     --listen-addr $(docker-machine ip manager) \
@@ -68,7 +70,7 @@ docker-machine ssh manager "docker service create \
 --label traefik.frontend.rule=Host:cloud.nlp.docker.localhost \
 dockerexa/nlpws:v1"
 
-sleep 1h
+sleep 75m
 
 docker-machine ssh manager "docker service create \
 --name ocrws \
@@ -83,8 +85,8 @@ docker-machine ssh manager "docker service create \
 
 #sed -i "3i 192.168.99.100" www.getx.com
 
+sleep 40m
 clear
-
 docker-machine ssh manager "docker service scale ocrws=2"
 #docker-machine ssh manager "docker service scale nlpws=2"
 docker-machine ls
@@ -93,6 +95,11 @@ docker-machine ssh manager "docker node ps"
 docker-machine ssh manager "docker node ps worker1"
 docker-machine ssh manager "docker node ps worker2"
 
+sleep 20m
 
+./test.sh
 
-
+docker-machine ssh manager "docker service ls"
+docker-machine ssh manager "docker node ps"
+docker-machine ssh manager "docker node ps worker1"
+docker-machine ssh manager "docker node ps worker2"
