@@ -70,7 +70,7 @@ docker-machine ssh manager "docker service create \
 --label traefik.frontend.rule=Host:cloud.nlp.docker.localhost \
 dockerexa/nlpws:v1"
 
-sleep 75m
+sleep 55m
 
 
 docker-machine ssh manager "docker service create \
