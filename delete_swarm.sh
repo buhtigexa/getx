@@ -10,4 +10,6 @@
  docker-machine rm -y worker2
  docker-machine rm -y manager
 
+sudo docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
+sudo docker ps
  
