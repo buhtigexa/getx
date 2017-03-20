@@ -20,7 +20,8 @@ cd ..
 sh delete_swarm.sh
 
 docker-machine create -d virtualbox manager 
-docker-machine create -d virtualbox worker1 & docker-machine create -d virtualbox worker2
+docker-machine create -d virtualbox worker1  
+docker-machine create -d virtualbox worker2
 
 
 docker-machine ssh manager "docker swarm init \
@@ -47,18 +48,17 @@ docker-machine ssh worker2 "docker swarm join \
 docker-machine ssh manager "docker network create --driver=overlay traefik-net"
 
 docker-machine ssh manager "docker service create \
-    --name traefik \
-    --constraint=node.role==manager \
-    --publish 80:80 --publish 8080:8080 \
-    --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
-    --network traefik-net \
-    traefik \
-    --docker \
-    --docker.swarmmode \
-    --docker.domain=traefik \
-    --docker.watch \
-    --web"
-
+--name traefik \
+--constraint=node.role==manager \
+--publish 80:80 --publish 8080:8080 \
+--mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+--network traefik-net \
+traefik \
+--docker \
+--docker.swarmmode \
+--docker.domain=traefik \
+--docker.watch \
+--web"
 
 
 docker-machine ssh manager "docker service create \
@@ -71,6 +71,7 @@ docker-machine ssh manager "docker service create \
 dockerexa/nlpws:v1"
 
 sleep 75m
+
 
 docker-machine ssh manager "docker service create \
 --name ocrws \
@@ -87,6 +88,7 @@ docker-machine ssh manager "docker service create \
 
 sleep 40m
 clear
+
 docker-machine ssh manager "docker service scale ocrws=2"
 #docker-machine ssh manager "docker service scale nlpws=2"
 docker-machine ls
