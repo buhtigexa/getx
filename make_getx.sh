@@ -99,6 +99,9 @@ docker-machine ssh manager "docker node ps worker2"
 
 sleep 20m
 
+
+echo "192.168.99.100 www.getx.com" >> /etc/hosts
+
 ./test.sh
 
 docker-machine ssh manager "docker service ls"
