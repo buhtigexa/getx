@@ -12,7 +12,7 @@ nlpws=http://www.getx.com:33100/nlpws/tpfcloud/nlp/
 
 allFiles=$(ls -1 ./images/ | wc -l)
 
-for ((i=1; i <3;i++))
+for ((i=1; i <2;i++))
 do
 	for (( myFile=1; myFile <=allFiles;myFile++))
 		do
