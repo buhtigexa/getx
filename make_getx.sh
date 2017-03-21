@@ -86,10 +86,10 @@ docker-machine ssh manager "docker service create \
 
 #sed -i "3i 192.168.99.100" www.getx.com
 
-sleep 40m
+sleep 30m
 clear
 
-docker-machine ssh manager "docker service scale ocrws=2"
+#docker-machine ssh manager "docker service scale ocrws=2"
 #docker-machine ssh manager "docker service scale nlpws=2"
 docker-machine ls
 docker-machine ssh manager "docker service ls"
@@ -97,14 +97,14 @@ docker-machine ssh manager "docker node ps"
 docker-machine ssh manager "docker node ps worker1"
 docker-machine ssh manager "docker node ps worker2"
 
-sleep 20m
 
 
 echo "192.168.99.100 www.getx.com" >> /etc/hosts
 
-./test.sh
 
 docker-machine ssh manager "docker service ls"
 docker-machine ssh manager "docker node ps"
 docker-machine ssh manager "docker node ps worker1"
 docker-machine ssh manager "docker node ps worker2"
+
+./test.sh
